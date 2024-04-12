@@ -1,9 +1,8 @@
 #include "gameObject.h"
+#include "../Render/sprite.h"
 
-void GameObject::updatePos(Vector3 newPos) {
-    position = newPos;
-    if (sprite) {
-        sprite->rect.x = newPos.x;
-        sprite->rect.y = newPos.y;
-    }
+
+void GameObject::assignSprite(Sprite *sprite) {
+    this->sprite = sprite;
+    this->sprite->gameObject = this;
 }

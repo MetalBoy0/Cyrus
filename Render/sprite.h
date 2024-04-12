@@ -1,6 +1,8 @@
 #ifndef SPRITE_H
 #define SPRITE_H
+
 #include "../SDL/SDL2/SDL.h"
+#include "../Util/gameObject.h"
 
 class Sprite {
 public:
@@ -17,15 +19,21 @@ public:
 
   void assignTexture(SDL_Texture *texture, int x, int y) {
     this->texture = texture;
-    rect.x = x;
-    rect.y = y;
+    if (gameObject) {
+      rect.x = gameObject->position.x;
+      rect.y = gameObject->position.y;
+    }
     rect.w = width;
     rect.h = height;
   }
 
+  // Updates the texture based off of the GameObject
+  void update();
+
   int width, height;
   SDL_Texture *texture;
   SDL_Rect rect;
+  GameObject *gameObject = nullptr;
 };
 
 #endif

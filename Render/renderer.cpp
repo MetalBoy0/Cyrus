@@ -3,18 +3,14 @@
 #include "../Util/gameObject.h"
 #include "../Util/vector3.h"
 #include "renderer.h"
+#include "sprite.h"
 #include "texture.h"
 #include <chrono>
 #include <iostream>
 #include <string>
 
 
-SDL_Texture *loadTexture(const char *path, SDL_Renderer *renderer) {
-  SDL_Surface *surface = SDL_LoadBMP(path);
-  SDL_Texture *texture = SDL_CreateTextureFromSurface(renderer, surface);
-  SDL_FreeSurface(surface);
-  return texture;
-}
+
 
 Renderer::Renderer(const char *windowName, int w, int h, int x, int y, int fps,
                    Vector3 backgroundColor) {
@@ -60,6 +56,7 @@ bool Renderer::render() {
     GameObject *o = object[i];
 
     if (o->sprite->texture) {
+      o->sprite->update();
       SDL_RenderCopy(renderer, o->sprite->texture, NULL, &o->sprite->rect);
     }
   }

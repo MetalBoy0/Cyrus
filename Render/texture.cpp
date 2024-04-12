@@ -10,3 +10,11 @@ SDL_Texture *solidTexture(SDL_Renderer *renderer, Vector3 color, int w, int h) {
   SDL_FreeSurface(surface);
   return texture;
 }
+
+// Load a texture from file
+SDL_Texture *loadTexture(const char *path, SDL_Renderer *renderer) {
+  SDL_Surface *surface = SDL_LoadBMP(path);
+  SDL_Texture *texture = SDL_CreateTextureFromSurface(renderer, surface);
+  SDL_FreeSurface(surface);
+  return texture;
+}

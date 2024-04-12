@@ -5,8 +5,6 @@
 #include "../Util/vector3.h"
 
 SDL_Texture *solidTexture(SDL_Renderer *renderer, Vector3 color, int w, int h);
-
-
-
+SDL_Texture *loadTexture(const char *path, SDL_Renderer *renderer);
 
 #endif

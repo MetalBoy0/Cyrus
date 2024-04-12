@@ -2,6 +2,7 @@
 
 #include "Render/renderer.h"
 #include "Render/texture.h"
+#include "Render/sprite.h"
 
 int main() {
 
@@ -15,11 +16,17 @@ int main() {
   // Assign stickman texture to gameObject
   SDL_Texture *stickManTexture = loadTexture("stickman.bmp", renderer.renderer);
 
+  // Create a stickman sprite with the dimensons 38, 91
   Sprite stickManSprite(38, 91);
+
+  // Assign the previously loaded stickman texture
   stickManSprite.assignTexture(stickManTexture, stickMan.position.x,
                                stickMan.position.y);
-  stickMan.sprite = &stickManSprite;
 
+  // Assign the sprite to the gameObject for rendering
+  stickMan.assignSprite(&stickManSprite);
+
+  // Adds the renderer's gameObject array
   renderer.AddObject(&stickMan);
 
   float gravitySpeed = 0;
@@ -29,9 +36,9 @@ int main() {
     // renderer.render() returns true when the user quits the window
     if (renderer.render())
       break;
-    stickMan.updatePos(stickMan.position + Vector3(0, gravitySpeed, 0));
-    if (stickMan.position.y > 600)
-      gravitySpeed = -gravitySpeed - 0.5;
+    stickMan.position = stickMan.position + Vector3(0, gravitySpeed, 0); // Apply gravity
+    if (stickMan.position.y > 600) // If it goes off screen
+      gravitySpeed = -gravitySpeed - 0.5; // Reverse speed
   }
 
   // Destroys all windows and cleans up GameObject textures

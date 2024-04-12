@@ -4,7 +4,7 @@
 #include "../SDL/SDL2/SDL.h"
 #include "../Util/gameObject.h"
 
-SDL_Texture *loadTexture(const char *path, SDL_Renderer *renderer);
+
 
 class Renderer {
 public:
