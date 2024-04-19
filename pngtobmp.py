@@ -17,7 +17,7 @@ if __name__ == '__main__':
     
     # Check if the correct number of arguments are provided
     if len(sys.argv) != 2:
-        print('Usage: python pngtobmp.py <input_png_path> <output_bmp_path>')
+        print('Usage: python pngtobmp.py <input_png_path>')
         sys.exit(1)
 
     # Get the input PNG path and output BMP path
