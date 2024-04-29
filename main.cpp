@@ -23,6 +23,8 @@ int main() {
   stickManSprite.assignTexture(stickManTexture, stickMan.position.x,
                                stickMan.position.y);
 
+  stickManSprite.rotation = 25;
+
   // Assign the sprite to the gameObject for rendering
   stickMan.assignSprite(&stickManSprite);
 
@@ -39,6 +41,7 @@ int main() {
     stickMan.position = stickMan.position + Vector3(0, gravitySpeed, 0); // Apply gravity
     if (stickMan.position.y > 600) // If it goes off screen
       gravitySpeed = -gravitySpeed - 0.5; // Reverse speed
+    stickManSprite.rotation += 1;
   }
 
   // Destroys all windows and cleans up GameObject textures

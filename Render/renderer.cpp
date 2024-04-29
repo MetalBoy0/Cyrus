@@ -9,9 +9,6 @@
 #include <iostream>
 #include <string>
 
-
-
-
 Renderer::Renderer(const char *windowName, int w, int h, int x, int y, int fps,
                    Vector3 backgroundColor) {
   SDL_Init(SDL_INIT_VIDEO);
@@ -57,7 +54,7 @@ bool Renderer::render() {
 
     if (o->sprite->texture) {
       o->sprite->update();
-      SDL_RenderCopy(renderer, o->sprite->texture, NULL, &o->sprite->rect);
+      SDL_RenderCopyEx(renderer, o->sprite->texture, NULL, &o->sprite->rect, o->sprite->rotation, NULL, SDL_FLIP_NONE);
     }
   }
 

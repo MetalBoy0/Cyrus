@@ -31,6 +31,7 @@ public:
   void update();
 
   int width, height;
+  float rotation;
   SDL_Texture *texture;
   SDL_Rect rect;
   GameObject *gameObject = nullptr;
