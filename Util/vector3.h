@@ -14,7 +14,9 @@
 #ifndef VECTOR3_H
 #define VECTOR3_H
 
-#include <cmath>
+#include <math.h>
+
+#define PI 3.14159265358979323846
 
 class Vector3 {
 public:
@@ -71,6 +73,25 @@ public:
   };
   float magnitude() const { return sqrt(x * x + y * y + z * z); };
   Vector3 normalize() const { return *this / magnitude(); };
+  Vector3 rotateAround(const Vector3 &point, float angle) const {
+    Vector3 v = *this - point;
+
+
+
+    float s = sin(PI / 180 * angle);
+    float c = cos(PI / 180 * angle);
+
+    float xnew = v.x * c - v.y * s;
+    float ynew = v.x * s + v.y * c;
+
+    return Vector3(xnew + point.x, ynew + point.y, z);
+
+  }
+  // The angle from 0,0 to this vector
+  float angle() {
+    return atan2(y, x) * 180 / PI;
+  }
+
 };
 
 #endif

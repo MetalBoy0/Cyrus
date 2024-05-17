@@ -1,8 +1,8 @@
 #define SDL_MAIN_HANDLED
 
 #include "Render/renderer.h"
-#include "Render/texture.h"
 #include "Render/sprite.h"
+#include "Render/texture.h"
 
 int main() {
 
@@ -13,35 +13,40 @@ int main() {
   // Create stickman gameObject
   GameObject stickMan(Vector3(50, 50, 0), Vector3(0, 0, 0));
 
-  // Assign stickman texture to gameObject
-  SDL_Texture *stickManTexture = loadTexture("stickman.bmp", renderer.renderer);
-
   // Create a stickman sprite with the dimensons 38, 91
-  Sprite stickManSprite(38, 91);
-
-  // Assign the previously loaded stickman texture
+  Sprite stickManSprite(45, 100);
+  SDL_Surface *stickManSurface = loadSurface("stickman.bmp");
+  SDL_Texture *stickManTexture = surfaceToTexture(stickManSurface, renderer.renderer);
   stickManSprite.assignTexture(stickManTexture, stickMan.position.x,
                                stickMan.position.y);
-
-  stickManSprite.rotation = 25;
+  stickManSprite.rotation = 0;
 
   // Assign the sprite to the gameObject for rendering
   stickMan.assignSprite(&stickManSprite);
 
+  // colliders
+  Collider stickManCollider;
+
+  stickManCollider.loadPoints(stickManSurface, renderer.renderer);
+  stickMan.collider = &stickManCollider;
+
   // Adds the renderer's gameObject array
   renderer.AddObject(&stickMan);
 
-  float gravitySpeed = 0;
-
+  int ySpeed = 3;
+  int xSpeed = 5;
   while (true) {
-    gravitySpeed += 0.5;
     // renderer.render() returns true when the user quits the window
     if (renderer.render())
       break;
-    stickMan.position = stickMan.position + Vector3(0, gravitySpeed, 0); // Apply gravity
-    if (stickMan.position.y > 600) // If it goes off screen
-      gravitySpeed = -gravitySpeed - 0.5; // Reverse speed
-    stickManSprite.rotation += 1;
+    if (stickMan.position.y > 600 - 100 ||
+        stickMan.position.y < 0) // If it goes off screen
+      ySpeed = -ySpeed;          // Reverse speed
+    if (stickMan.position.x > 800 - 45 || stickMan.position.x < 0)
+      xSpeed = -xSpeed;
+    stickManSprite.rotation += 0;
+
+    stickMan.position = stickMan.position + Vector3(xSpeed, ySpeed, 0);
   }
 
   // Destroys all windows and cleans up GameObject textures

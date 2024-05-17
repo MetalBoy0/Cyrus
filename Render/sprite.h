@@ -34,6 +34,7 @@ public:
   float rotation;
   SDL_Texture *texture;
   SDL_Rect rect;
+  SDL_Rect boundingBox;
   GameObject *gameObject = nullptr;
 };
 

@@ -2,7 +2,7 @@
 #define GAMEOBJECT_H
 
 #include "vector3.h"
-#include "../Physics/collisions.h"
+#include "../Collisions/collisions.h"
 
 class Sprite;
 
@@ -19,6 +19,7 @@ public:
   Vector3 position;
   Vector3 rotation;
 
+  
   Sprite *sprite = nullptr;
   Collider *collider = nullptr;
 };
