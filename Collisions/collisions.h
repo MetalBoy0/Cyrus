@@ -10,10 +10,10 @@ class Collider {
  
     bool check_collision(Collider * GameOjbect, float coord[2]);
 
-    void loadPoints(SDL_Surface *surface);
+    void loadPoints(SDL_Surface *surface, SDL_Renderer *renderer);
 
 
-    Vector3 points[256];
+    Vector3 points[512];
     int numPoints = 0;
 
 };

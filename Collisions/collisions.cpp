@@ -1,5 +1,6 @@
 #include "../Render/texture.h"
 #include "collisions.h"
+#include <iostream>
 
 int getR(Uint32 pixel) { return (pixel & 0x00FF0000) >> 16; }
 int getG(Uint32 pixel) { return (pixel & 0x0000FF00) >> 8; }
@@ -9,7 +10,7 @@ int getA(Uint32 pixel) { return (pixel & 0xFF000000) >> 24; }
 bool Collider::check_collision(Collider *GameObject, float coord[2]) {}
 
 // Load the points from a texture into the points array
-void Collider::loadPoints(SDL_Surface *surface) {
+void Collider::loadPoints(SDL_Surface *surface, SDL_Renderer *renderer) {
   // Load the pixels of the texture into an array
   int w, h;
 
@@ -65,7 +66,7 @@ void Collider::loadPoints(SDL_Surface *surface) {
   float maxDeviation = 2;
   int roundCounter = 0;
   int edgeCounter = 0;
-  int numPoints = 0;
+  numPoints = 0;
 
   for (int i = 0; i < numEdge; i++) {
     Vector3 point = edgePoints[i];
@@ -83,4 +84,6 @@ void Collider::loadPoints(SDL_Surface *surface) {
     }
     averageEdge += dir / roundCounter;
   }
+
+  std::cout << "Renderer: " << renderer << "\n";
 }

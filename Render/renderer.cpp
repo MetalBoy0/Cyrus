@@ -11,32 +11,35 @@
 
 void drawCircle(SDL_Renderer *renderer, int32_t centreX, int32_t centreY,
                 int32_t radius) {
-  int32_t x = radius - 1;
+  const int32_t diameter = (radius * 2);
+
+  int32_t x = (radius - 1);
   int32_t y = 0;
-  int32_t dx = 1;
-  int32_t dy = 1;
-  int32_t err = dx - (radius << 1);
+  int32_t tx = 1;
+  int32_t ty = 1;
+  int32_t error = (tx - diameter);
 
   while (x >= y) {
-    SDL_RenderDrawPoint(renderer, centreX + x, centreY + y);
-    SDL_RenderDrawPoint(renderer, centreX + y, centreY + x);
-    SDL_RenderDrawPoint(renderer, centreX - y, centreY + x);
-    SDL_RenderDrawPoint(renderer, centreX - x, centreY + y);
-    SDL_RenderDrawPoint(renderer, centreX - x, centreY - y);
-    SDL_RenderDrawPoint(renderer, centreX - y, centreY - x);
-    SDL_RenderDrawPoint(renderer, centreX + y, centreY - x);
+    //  Each of the following renders an octant of the circle
     SDL_RenderDrawPoint(renderer, centreX + x, centreY - y);
+    SDL_RenderDrawPoint(renderer, centreX + x, centreY + y);
+    SDL_RenderDrawPoint(renderer, centreX - x, centreY - y);
+    SDL_RenderDrawPoint(renderer, centreX - x, centreY + y);
+    SDL_RenderDrawPoint(renderer, centreX + y, centreY - x);
+    SDL_RenderDrawPoint(renderer, centreX + y, centreY + x);
+    SDL_RenderDrawPoint(renderer, centreX - y, centreY - x);
+    SDL_RenderDrawPoint(renderer, centreX - y, centreY + x);
 
-    if (err <= 0) {
-      y++;
-      err += dy;
-      dy += 2;
+    if (error <= 0) {
+      ++y;
+      error += ty;
+      ty += 2;
     }
 
-    if (err > 0) {
-      x--;
-      dx += 2;
-      err += dx - (radius << 1);
+    if (error > 0) {
+      --x;
+      tx += 2;
+      error += (tx - diameter);
     }
   }
 }
@@ -86,16 +89,11 @@ bool Renderer::render() {
 
     if (o->sprite->texture) {
       o->sprite->update();
-      //SDL_RenderCopyEx(renderer, o->sprite->texture, NULL, &o->sprite->rect,
-      //                 o->sprite->rotation, NULL, SDL_FLIP_NONE);
-      // Draw rect for debugging purposes
-      SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
-      SDL_RenderDrawRect(renderer, &o->sprite->rect);
-      SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
-      SDL_RenderDrawRect(renderer, &o->sprite->boundingBox);
+      
 
       // Draw circle at position
       if (o->collider) {
+        SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
         // Draw hitbox
         for (int i = 0; i < o->collider->numPoints; i++) {
           drawCircle(renderer, o->collider->points[i].x + o->position.x,
